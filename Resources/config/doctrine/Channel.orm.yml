@@ -1,0 +1,43 @@
+PLejeune\VideoBundle\Entity\Channel:
+  type: entity
+  table: channel
+  repositoryClass: PLejeune\VideoBundle\Repository\ChannelRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    name:
+      type: string
+      length: 255
+    identifier:
+      type: string
+      length: 50
+    customUrl:
+      type: string
+      length: 255
+      nullable: true
+    provider:
+      type: string
+      length: 25
+      nullable: false
+    logo:
+      type: string
+      length: 255
+      nullable: true
+    enabled:
+      type: boolean
+    updated:
+      type: datetime
+      nullable: true
+  lifecycleCallbacks: {  }
+
+# UCO4rvxZ-bJ6uGDeSkMCmzEg - Bay Area Bugs
+# UCLVnwvxqF2n6CELUZaEJ3SQ - Jeff Favignano
+# UC3z5qYUmU-2Fj2y97Wrp41A - Polecat324
+# UCxuYnQmCq_9FTZSq_fgKDCA - BLacKHaLLoW
+# UCb_EZzsb5ifvLfaN5jx_cKA - Zach Houseknecht
+# UC3lwceVh3UnXJMjEZaRZAsg - TheNorthernAlex
+# UCAbdeLiTPdjk1X2TY_ZdLDw - SpeirsTheAmazingHD

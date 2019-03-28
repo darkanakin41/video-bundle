@@ -1,0 +1,48 @@
+{
+  "name": "plejeune/video-bundle",
+  "type": "symfony-bundle",
+  "description": "Pierre LEJEUNE VideoBundle",
+  "keywords": [
+    "Core Bundle"
+  ],
+  "repositories": [
+    { "type": "gitlab", "url": "https://gitlab.com/pierrelejeune/corebundle.git" }
+  ],
+  "homepage": "https://gitlab.com/pierrelejeune/corebundle",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Pierre LEJEUNE",
+      "email": "lejeune.pierre.41@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.0",
+    "knplabs/knp-menu-bundle": "^2.0",
+    "plejeune/core-bundle":"dev-master",
+    "symfony/form": "*",
+    "symfony/framework-bundle": "*",
+    "symfony/orm-pack": "*",
+    "symfony/security-bundle": "*",
+    "symfony/translation": "*",
+    "symfony/twig-bundle": "*",
+    "symfony/validator": "*",
+    "symfony/yaml": "*"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "PLejeune\\VideoBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  }
+}
