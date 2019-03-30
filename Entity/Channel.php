@@ -30,7 +30,7 @@ class Channel
     /**
      * @var string
      */
-    private $provider;
+    private $platform;
 
     /**
      * @var string|null
@@ -131,27 +131,27 @@ class Channel
     }
 
     /**
-     * Set provider.
+     * Set platform.
      *
-     * @param string $provider
+     * @param string $platform
      *
      * @return Channel
      */
-    public function setProvider($provider)
+    public function setPlatform($platform)
     {
-        $this->provider = $provider;
+        $this->platform = $platform;
 
         return $this;
     }
 
     /**
-     * Get provider.
+     * Get platform.
      *
      * @return string
      */
-    public function getProvider()
+    public function getPlatform()
     {
-        return $this->provider;
+        return $this->platform;
     }
 
     /**

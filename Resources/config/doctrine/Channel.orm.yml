@@ -19,7 +19,7 @@ PLejeune\VideoBundle\Entity\Channel:
       type: string
       length: 255
       nullable: true
-    provider:
+    platform:
       type: string
       length: 25
       nullable: false

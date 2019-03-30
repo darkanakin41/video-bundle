@@ -28,7 +28,7 @@ class ChannelService
      */
     public function refresh(Channel $channel)
     {
-        $requester = $this->getRequester($channel->getProvider());
+        $requester = $this->getRequester($channel->getPlatform());
         $requester->updateChannel($channel);
     }
 
@@ -42,23 +42,23 @@ class ChannelService
      */
     public function retrieveVideos(Channel $channel)
     {
-        $requester = $this->getRequester($channel->getProvider());
+        $requester = $this->getRequester($channel->getPlatform());
         return $requester->retrieveChannelVideos($channel);
     }
 
     /**
-     * Retrieve the requester from the providers
+     * Retrieve the requester from the platform
      *
-     * @param string $provider
+     * @param string $platform
      *
      * @return AbstractRequester
      * @throws \Exception
      */
-    private function getRequester($provider)
+    private function getRequester($platform)
     {
-        $classname = sprintf('PLejeune\\VideoBundle\\Requester\\%sRequester', ucfirst(strtolower($provider)));
-        if (!class_exists($classname)) throw new \Exception('unhandled_provider');
-        $object = new $classname($this->container->get('doctrine'), $this->container->get('plejeune.api'), $this->container->get('plejeune.stream.twig'));
+        $classname = sprintf('PLejeune\\VideoBundle\\Requester\\%sRequester', ucfirst(strtolower($platform)));
+        if (!class_exists($classname)) throw new \Exception('unhandled_platform');
+        $object = new $classname($this->container->get('doctrine'), $this->container->get('plejeune.api'), $this->container->get('event_dispatcher'));
         return $object;
     }
 

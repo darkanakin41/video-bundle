@@ -64,7 +64,7 @@ class YoutubeRequester extends AbstractRequester
         $created = 0;
 
         foreach ($data['items'] as $item) {
-            $video = $this->registry->getRepository(Video::class)->findOneBy(['provider' => $channel->getProvider(), 'identifier' => $item['id']]);
+            $video = $this->registry->getRepository(Video::class)->findOneBy(['platform' => $channel->getPlatform(), 'identifier' => $item['id']]);
             if ($video !== null) {
                 continue;
             }
@@ -73,12 +73,16 @@ class YoutubeRequester extends AbstractRequester
             $video->setIdentifier($item['id']['videoId']);
             $video->setChannel($channel);
             $video->setEnabled(true);
-            $video->setProvider($channel->getProvider());
+            $video->setPlatform($channel->getPlatform());
 
             $this->updateVideoData($video, $item);
 
             $created++;
             $this->registry->getManager()->persist($video);
+
+            if(isset($item['snippet']['liveBroadcastContent']) && $item['snippet']['liveBroadcastContent'] === 'live'){
+                $this->triggerIsLiveEvent($video);
+            }
         }
 
         $this->registry->getManager()->flush();

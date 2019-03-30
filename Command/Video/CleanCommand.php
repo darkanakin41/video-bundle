@@ -34,12 +34,12 @@ class CleanCommand extends ContainerAwareCommand
 
         $progressBar->start();
 
-        foreach (ProviderNomenclature::getAllConstants() as $provider) {
-            $progressBar->setMessage(ucfirst($provider));
+        foreach (ProviderNomenclature::getAllConstants() as $platform) {
+            $progressBar->setMessage(ucfirst($platform));
             $progressBar->display();
             for ($i = 0; $i < self::NB_ITERATIONS; $i++) {
-                $videos = $repository->findBy(['provider'=>$provider], ['checked' => 'ASC'], self::PER_ITERATIONS);
-                $this->getContainer()->get(VideoService::class)->refresh($provider, $videos);
+                $videos = $repository->findBy(['platform'=>$platform], ['checked' => 'ASC'], self::PER_ITERATIONS);
+                $this->getContainer()->get(VideoService::class)->refresh($platform, $videos);
                 $progressBar->advance(self::PER_ITERATIONS);
             }
         }
