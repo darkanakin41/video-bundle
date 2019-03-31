@@ -2,6 +2,7 @@
 
 namespace PLejeune\VideoBundle\Requester;
 
+use Exception;
 use PLejeune\ApiBundle\EndPoint\Google\YoutubeEndPoint;
 use PLejeune\ApiBundle\Nomenclature\ClientNomenclature;
 use PLejeune\ApiBundle\Nomenclature\EndPointNomenclature;
@@ -140,6 +141,25 @@ class YoutubeRequester extends AbstractRequester
             $video->setPreview($data['snippet']['thumbnails']['medium']['url']);
         } else {
             $video->setPreview($data['snippet']['thumbnails']['default']['url']);
+        }
+    }
+
+    /**
+     * Retrieve channel's identifier based on his information
+     *
+     * @param Channel $channel
+     *
+     * @throws Exception
+     */
+    public function retrieveIdentifier(Channel $channel)
+    {
+        /** @var YoutubeEndPoint $endpoint */
+        $endpoint = $this->apiService->getEndPoint(ClientNomenclature::GOOGLE, EndPointNomenclature::YOUTUBE);
+
+        $data = $endpoint->getChannelId($channel->getName());
+
+        if (isset($data['pageInfo']) && intval($data['pageInfo']['totalResults']) === 1) {
+            $channel->setIdentifier($data['items']['id']);
         }
     }
 }
