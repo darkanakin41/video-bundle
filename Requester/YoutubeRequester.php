@@ -152,13 +152,13 @@ class YoutubeRequester extends AbstractRequester
                 $channel = new Channel();
                 $channel->setPlatform(ProviderNomenclature::YOUTUBE);
                 $channel->setIdentifier($data['snippet']['channelId']);
+                $channel->setEnabled(false);
 
                 $this->channelService->create($channel, $channel->getIdentifier());
             }catch(ChannelDoublonException $e){
                 $channel = $e->getChannel();
-            } catch (ChannelNotFoundException $e) {
-            } catch (Exception $e) {
-            }
+            } catch (ChannelNotFoundException $e) {}
+
 
             $video->setChannel($channel);
         }

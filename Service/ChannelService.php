@@ -49,7 +49,12 @@ class ChannelService
     {
         $classname = sprintf('PLejeune\\VideoBundle\\Requester\\%sRequester', ucfirst(strtolower($platform)));
         if (!class_exists($classname)) throw new Exception('unhandled_platform');
-        $object = new $classname($this->container->get('doctrine'), $this->container->get('plejeune.api'), $this->container->get('event_dispatcher'));
+        $object = new $classname(
+            $this->container->get('doctrine'),
+            $this->container->get('plejeune.api'),
+            $this->container->get('event_dispatcher'),
+            $this
+        );
         return $object;
     }
 
