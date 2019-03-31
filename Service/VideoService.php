@@ -46,6 +46,12 @@ class VideoService
 
         $video->setPlatform($platform);
         $video->setIdentifier($data);
+        if($video->getPublished() === null){
+            $video->setPublished(new \DateTime());
+        }
+        if($video->getTitle() === null){
+            $video->setTitle("TO BE UPDATED");
+        }
 
         if ($video->getIdentifier() === null) {
             throw new VideoNotFoundException();
