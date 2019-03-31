@@ -59,6 +59,9 @@ class ChannelService
      * @param $url
      *
      * @return bool
+     *
+     * @throws ChannelNotFoundException
+     * @throws ChannelDoublonException
      * @throws Exception
      */
     public function create(Channel $channel, $url)
