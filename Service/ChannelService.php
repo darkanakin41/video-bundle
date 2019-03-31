@@ -100,8 +100,8 @@ class ChannelService
             throw $exception;
         }
 
-        $this->container->get('doctrine')->persist($channel);
-        $this->container->get('doctrine')->flush();
+        $this->container->get('doctrine')->getManager()->persist($channel);
+        $this->container->get('doctrine')->getManager()->flush();
 
         $this->refresh($channel);
 
