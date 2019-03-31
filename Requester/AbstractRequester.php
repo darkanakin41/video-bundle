@@ -6,29 +6,35 @@ use Exception;
 use PLejeune\ApiBundle\Service\ApiService;
 use PLejeune\VideoBundle\Entity\Channel;
 use PLejeune\VideoBundle\Entity\Video;
+use PLejeune\VideoBundle\Service\ChannelService;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractRequester
 {
     /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-    /**
      * @var ApiService
      */
     protected $apiService;
+    /**
+     * @var ChannelService
+     */
+    protected $channelService;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
     /**
      * @var RegistryInterface
      */
     protected $registry;
 
-    public function __construct(RegistryInterface $registry, ApiService $apiService, EventDispatcherInterface $eventDispatcher)
+    public function __construct(RegistryInterface $registry, ApiService $apiService, EventDispatcherInterface $eventDispatcher, ChannelService $channelService)
     {
         $this->registry = $registry;
         $this->apiService = $apiService;
         $this->eventDispatcher = $eventDispatcher;
+        $this->channelService = $channelService;
     }
 
     /**

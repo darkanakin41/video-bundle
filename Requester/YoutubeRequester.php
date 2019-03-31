@@ -8,6 +8,9 @@ use PLejeune\ApiBundle\Nomenclature\ClientNomenclature;
 use PLejeune\ApiBundle\Nomenclature\EndPointNomenclature;
 use PLejeune\VideoBundle\Entity\Channel;
 use PLejeune\VideoBundle\Entity\Video;
+use PLejeune\VideoBundle\Exception\ChannelDoublonException;
+use PLejeune\VideoBundle\Exception\ChannelNotFoundException;
+use PLejeune\VideoBundle\Nomenclature\ProviderNomenclature;
 
 class YoutubeRequester extends AbstractRequester
 {
@@ -141,6 +144,23 @@ class YoutubeRequester extends AbstractRequester
             $video->setPreview($data['snippet']['thumbnails']['medium']['url']);
         } else {
             $video->setPreview($data['snippet']['thumbnails']['default']['url']);
+        }
+
+        if($video->getChannel() === null){
+            $channel = null;
+            try{
+                $channel = new Channel();
+                $channel->setPlatform(ProviderNomenclature::YOUTUBE);
+                $channel->setIdentifier($data['snippet']['channelId']);
+
+                $this->channelService->create($channel);
+            }catch(ChannelDoublonException $e){
+                $channel = $e->getChannel();
+            } catch (ChannelNotFoundException $e) {
+            } catch (Exception $e) {
+            }
+
+            $video->setChannel($channel);
         }
     }
 

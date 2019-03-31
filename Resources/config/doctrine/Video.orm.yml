@@ -12,12 +12,14 @@ PLejeune\VideoBundle\Entity\Video:
     title:
       type: string
       length: 255
+      nullable: true
     identifier:
       type: string
       length: 255
     preview:
       type: string
       length: 255
+      nullable: true
     platform:
       type: string
       length: 255

@@ -73,9 +73,13 @@ class ChannelService
         $data = ChannelHelper::getIdentifier($url);
         $platform = ChannelHelper::getPlatform($url);
 
-        $channel->setPlatform($platform);
-        $channel->setIdentifier($data["identifier"]);
-        $channel->setName($data["name"]);
+        if($platform !== "OTHER"){
+            $channel->setPlatform($platform);
+        }
+        if(!empty($data)){
+            $channel->setIdentifier($data["identifier"]);
+            $channel->setName($data["name"]);
+        }
 
         if ($channel->getIdentifier() === null) {
             $this->retrieveIdentifier($channel);
