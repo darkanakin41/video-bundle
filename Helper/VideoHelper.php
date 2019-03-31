@@ -12,7 +12,7 @@ class VideoHelper
      *
      * @param string $url
      *
-     * @return array
+     * @return string
      */
     public static function getIdentifier($url){
         if(strpos ($url, "dailymotion" )){

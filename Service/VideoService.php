@@ -45,7 +45,7 @@ class VideoService
         $platform = VideoHelper::getPlatform($url);
 
         $video->setPlatform($platform);
-        $video->setIdentifier($data["identifier"]);
+        $video->setIdentifier($data);
 
         if ($video->getIdentifier() === null) {
             throw new VideoNotFoundException();
