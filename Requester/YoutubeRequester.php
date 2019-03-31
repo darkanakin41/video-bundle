@@ -159,7 +159,7 @@ class YoutubeRequester extends AbstractRequester
         $data = $endpoint->getChannelId($channel->getName());
 
         if (isset($data['pageInfo']) && intval($data['pageInfo']['totalResults']) === 1) {
-            $channel->setIdentifier($data['items']['id']);
+            $channel->setIdentifier($data['items'][0]['id']);
         }
     }
 }
