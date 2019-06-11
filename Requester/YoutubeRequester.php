@@ -28,7 +28,7 @@ class YoutubeRequester extends AbstractRequester
         $endpoint = $this->apiService->getEndPoint(ClientNomenclature::GOOGLE, EndPointNomenclature::YOUTUBE);
         $data = $endpoint->getChannelData($channel->getIdentifier());
 
-        if (count($data['items']) == 0) {
+        if (!isset($data['items']) || count($data['items']) == 0) {
             return;
         }
 
@@ -112,6 +112,10 @@ class YoutubeRequester extends AbstractRequester
         }
 
         $data = $endpoint->getVideosData($ids);
+
+        if(!isset($data['items'])){
+            return;
+        }
 
         foreach ($videos as $video) {
             /** @var array $items */
