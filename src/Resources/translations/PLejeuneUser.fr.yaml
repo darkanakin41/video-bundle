@@ -1,0 +1,82 @@
+avatar : 'Avatar'
+date_naissance : 'Date de naissance'
+date_registration : "Date d'inscription"
+email : 'E-mail'
+facebook : "Facebook"
+firstname : 'Prénom'
+forgotten_password : "Mot de passe oublié ?"
+instagram : 'Instagram'
+lastname : 'Nom'
+login : 'Identification'
+logout : 'Deconnexion'
+new_password : 'Mot de passe'
+new_password_repeat : 'Une nouvelle fois votre mot de passe'
+old_password : "Mot de passe actuel"
+password : 'Mot de passe'
+password_repeat : 'Une nouvelle fois votre mot de passe'
+password_confirm : 'Votre mot de passe'
+registration : 'Inscription'
+remember_me : 'Rester connecté'
+twitch : "Twitch"
+twitter : "Twitter"
+username : 'Identifiant'
+youtube : 'Youtube'
+
+darkanakin41_user_profile: "Mon compte"
+darkanakin41_user_logout: "Déconnexion"
+
+profil :
+    view : 'Afficher'
+    edit : 'Modifier mes informations'
+    change_password : 'Modifier mon mot de passe'
+    delete_account : 'Supprimer mon compte'
+
+action:
+    change_password : 'Modifier'
+    login : 'Connexion'
+    register : "M'inscrire !"
+    reset_password : "Réinitialiser"
+    validate : "Valider"
+    delete :
+        no : "Heu ... en fait non !"
+        yes : "Oui ! j'en suis sûre !"
+
+account_delete :
+    body : "Attention, vous êtes sur le point de supprimer votre compte. Cette action entrainera la suppression de toutes vos informations personnelles et est irréversible.<br/>Êtes-vous sûre de vouloir réaliser cette action ?"
+
+registration_confirmation :
+    title : "Bienvenue %firstname%"
+    message : "Félicitation, votre compte a bien été créé !<br/>Afin de terminer le processus, nous vous invitons à valider votre compte à l'aide de l'email que nous avons envoyé à votre addresse (%email%)"
+registration_validation :
+    title : "Bonjour %firstname%"
+    message : 'Félicitation, vous avez bien validé votre compte, vous pouvez désormais vous connecter en <a href="%login%">cliquant ici</a>'
+
+reset_password :
+    request :
+        title : "Réinitialisation du mot de passe"
+    confirm :
+        title : "Réinitialisation du mot de passe en cours"
+        body : "Nous avons envoyé un mail à l'adresse associé à votre compte contenant les instructions pour réinitialiser votre mot de passe"
+    form :
+        title : "Réinitialisation du mot de passe en cours"
+    form_confirm :
+        title : "Réinitialisation du mot de passe finalisée"
+        body : "Vous avez bien réinitialiser votre mot de passe, à présent, vous pouvez vous connecter"
+
+mail :
+    registration :
+        subject : "Validez votre inscription"
+        body : 'Vous venez de créer un compte sur le site <a href="%homepage%">ScoopTurn</a>.<br/>Afin de terminer votre inscription, veuillez <a href="%validation_url%">cliquer ici</a>'
+    reset_password :
+        subject : "Réinitialisation de mot de passe"
+        body : 'Vous venez de demander à notre équipe sur le site <a href="%homepage%">ScoopTurn</a> de réinitialiser votre mot de passe.<br/>Afin de poursuivre, veuillez <a href="%url%">cliquer ici</a><br/><br/>Si toutefois vous n''etes pas à l''origine de cette demande, nous vous invitons à vous connecter sur notre site et à changer votre mot de passe'
+
+error :
+    account_not_enabled : "Votre compte est désactivé"
+    account_not_validated : "Il semblerait que vous n'avez pas encore validé votre compte."
+    no_account_found : "Aucun compte ne correspond au couple Identifiant/Mot de passe renseigné"
+    reset_password_pending : "Une demande de réinitialisation de mot de passe est déjà en cours"
+    title : "Une erreur est survenue"
+    token_invalid : "Le token fourni n'est pas valide"
+    unknown_user : "Aucun utilisateur ne correspond à l'identifiant/adresse mail renseigné"
+    wrong_password : "Aucun compte ne correspond au couple Identifiant/Mot de passe renseigné"

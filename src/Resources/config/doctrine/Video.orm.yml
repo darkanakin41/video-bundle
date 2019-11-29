@@ -1,0 +1,40 @@
+Darkanakin41\VideoBundle\Entity\Video:
+  type: entity
+  table: video
+  repositoryClass: Darkanakin41\VideoBundle\Repository\VideoRepository
+  id:
+    id:
+      type: integer
+      id: true
+      generator:
+        strategy: AUTO
+  fields:
+    title:
+      type: string
+      length: 255
+      nullable: true
+    identifier:
+      type: string
+      length: 255
+    preview:
+      type: string
+      length: 255
+      nullable: true
+    platform:
+      type: string
+      length: 255
+    enabled:
+      type: boolean
+    published:
+      type: datetime
+    checked:
+      type: datetime
+      nullable: true
+  manyToOne:
+    channel:
+      targetEntity: Darkanakin41\VideoBundle\Entity\Channel
+      joinColumn:
+        name: channel_id
+        referencedColumnName: id
+      nullable: true
+  lifecycleCallbacks: {  }
