@@ -18,7 +18,9 @@ class ChannelTest extends AbstractEntityTestCase
     {
         return $this->getMockForAbstractClass(Channel::class);
     }
-
+    /**
+     * @inheritDoc
+     */
     public function nullableFieldProvider()
     {
         return [
@@ -29,6 +31,14 @@ class ChannelTest extends AbstractEntityTestCase
             ['logo', 'toto'],
             ['updated', new DateTime()],
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function notNullableFieldProvider()
+    {
+        return [];
     }
 
     public function defaultValueProvider()

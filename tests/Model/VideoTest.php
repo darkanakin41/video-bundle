@@ -20,6 +20,9 @@ class VideoTest extends AbstractEntityTestCase
         return $this->getMockForAbstractClass(Video::class);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function nullableFieldProvider()
     {
         return [
@@ -32,11 +35,22 @@ class VideoTest extends AbstractEntityTestCase
         ];
     }
 
+    /**
+     * @inheritDoc
+     */
     public function defaultValueProvider()
     {
         return [
             ['enabled', false, true],
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function notNullableFieldProvider()
+    {
+        return [];
     }
 
     public function testChannel()

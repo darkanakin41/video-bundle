@@ -1,7 +1,10 @@
 <?php
 
-namespace Darkanakin41\VideoBundle;
+/*
+ * This file is part of the Darkanakin41VideoBundle package.
+ */
 
+namespace Darkanakin41\VideoBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
