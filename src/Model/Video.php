@@ -1,57 +1,78 @@
 <?php
 
-namespace Darkanakin41\VideoBundle\Entity;
+/*
+ * This file is part of the Darkanakin41VideoBundle package.
+ */
+
+namespace Darkanakin41\VideoBundle\Model;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Video
+ * Video.
+ *
+ * @ORM\MappedSuperclass()
  */
-class Video
+abstract class Video
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
+     * @ORM\Column(name="title", type="string", nullable=true)
      */
     private $title;
 
     /**
      * @var string
+     * @ORM\Column(name="identifier", type="string")
      */
     private $identifier;
 
     /**
      * @var string
+     * @ORM\Column(name="preview", type="string", nullable=true)
      */
     private $preview;
 
     /**
      * @var string
+     * @ORM\Column(name="paltform", type="string")
      */
     private $platform;
 
     /**
      * @var bool
+     * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled;
 
     /**
      * @var \DateTime
+     * @ORM\Column(name="published", type="datetime")
      */
     private $published;
 
     /**
      * @var \DateTime|null
+     * @ORM\Column(name="checked", type="datetime", nullable=true)
      */
     private $checked;
 
     /**
-     * @var \Darkanakin41\VideoBundle\Entity\Channel
+     * @var Channel
+     * @ORM\ManyToOne(targetEntity="Darkanakin41\VideoBundle\Model\Channel")
+     * @ORM\JoinColumn(name="channel_id", referencedColumnName="id", nullable=true)
      */
     private $channel;
 
+    public function __construct()
+    {
+        $this->enabled = false;
+    }
 
     /**
      * Get id.
@@ -178,7 +199,7 @@ class Video
      *
      * @return bool
      */
-    public function getEnabled()
+    public function isEnabled()
     {
         return $this->enabled;
     }
@@ -234,11 +255,9 @@ class Video
     /**
      * Set channel.
      *
-     * @param \Darkanakin41\VideoBundle\Entity\Channel|null $channel
-     *
      * @return Video
      */
-    public function setChannel(\Darkanakin41\VideoBundle\Entity\Channel $channel = null)
+    public function setChannel(\Darkanakin41\VideoBundle\Model\Channel $channel = null)
     {
         $this->channel = $channel;
 
@@ -248,7 +267,7 @@ class Video
     /**
      * Get channel.
      *
-     * @return \Darkanakin41\VideoBundle\Entity\Channel|null
+     * @return \Darkanakin41\VideoBundle\Model\Channel|null
      */
     public function getChannel()
     {

@@ -1,52 +1,71 @@
 <?php
 
-namespace Darkanakin41\VideoBundle\Entity;
+/*
+ * This file is part of the Darkanakin41VideoBundle package.
+ */
+
+namespace Darkanakin41\VideoBundle\Model;
+
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Channel
+ * Channel.
+ *
+ * @ORM\MappedSuperclass()
  */
-class Channel
+abstract class Channel
 {
     /**
      * @var int
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
+     * @ORM\Column(name="name", type="string")
      */
     private $name;
 
     /**
      * @var string
+     * @ORM\Column(name="identifier", type="string")
      */
     private $identifier;
 
     /**
      * @var string
+     * @ORM\Column(name="custom_url", type="string", nullable=true)
      */
     private $customUrl;
 
     /**
      * @var string
+     * @ORM\Column(name="platform", type="string")
      */
     private $platform;
 
     /**
      * @var string|null
+     * @ORM\Column(name="logo", type="string", nullable=true)
      */
     private $logo;
 
     /**
      * @var bool
+     * @ORM\Column(name="enabled", type="boolean")
      */
     private $enabled;
 
     /**
      * @var \DateTime|null
+     * @ORM\Column(name="updated", type="datetime", nullable=true)
      */
     private $updated;
 
+    public function __construct()
+    {
+        $this->enabled = false;
+    }
 
     /**
      * Get id.
@@ -56,6 +75,16 @@ class Channel
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get name.
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
@@ -73,13 +102,13 @@ class Channel
     }
 
     /**
-     * Get name.
+     * Get identifier.
      *
      * @return string
      */
-    public function getName()
+    public function getIdentifier()
     {
-        return $this->name;
+        return $this->identifier;
     }
 
     /**
@@ -97,13 +126,13 @@ class Channel
     }
 
     /**
-     * Get identifier.
+     * Get customUrl.
      *
      * @return string
      */
-    public function getIdentifier()
+    public function getCustomUrl()
     {
-        return $this->identifier;
+        return $this->customUrl;
     }
 
     /**
@@ -121,13 +150,13 @@ class Channel
     }
 
     /**
-     * Get customUrl.
+     * Get platform.
      *
      * @return string
      */
-    public function getCustomUrl()
+    public function getPlatform()
     {
-        return $this->customUrl;
+        return $this->platform;
     }
 
     /**
@@ -145,13 +174,13 @@ class Channel
     }
 
     /**
-     * Get platform.
+     * Get logo.
      *
-     * @return string
+     * @return string|null
      */
-    public function getPlatform()
+    public function getLogo()
     {
-        return $this->platform;
+        return $this->logo;
     }
 
     /**
@@ -169,13 +198,13 @@ class Channel
     }
 
     /**
-     * Get logo.
+     * Get enabled.
      *
-     * @return string|null
+     * @return bool
      */
-    public function getLogo()
+    public function isEnabled()
     {
-        return $this->logo;
+        return $this->enabled;
     }
 
     /**
@@ -193,13 +222,13 @@ class Channel
     }
 
     /**
-     * Get enabled.
+     * Get updated.
      *
-     * @return bool
+     * @return \DateTime|null
      */
-    public function getEnabled()
+    public function getUpdated()
     {
-        return $this->enabled;
+        return $this->updated;
     }
 
     /**
@@ -214,15 +243,5 @@ class Channel
         $this->updated = $updated;
 
         return $this;
-    }
-
-    /**
-     * Get updated.
-     *
-     * @return \DateTime|null
-     */
-    public function getUpdated()
-    {
-        return $this->updated;
     }
 }
