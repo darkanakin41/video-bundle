@@ -29,7 +29,7 @@ class ChannelHelper
                 return array('identifier' => $url_pieces[4], 'name' => null);
             }
 
-            return array('nom' => array_slice($url_pieces, -1)[0], 'identifier' => null);
+            return array('name' => array_slice($url_pieces, -1)[0], 'identifier' => null);
         }
 
         return array();
