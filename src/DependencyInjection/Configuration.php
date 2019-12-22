@@ -27,7 +27,7 @@ class Configuration implements ConfigurationInterface
             ->children()
             ->scalarNode('video_class')->isRequired()->cannotBeEmpty()->end()
             ->scalarNode('channel_class')->isRequired()->cannotBeEmpty()->end()
-            ->scalarNode('platform')
+            ->arrayNode('platform')
                 ->arrayPrototype()
                     ->children()
                         ->integerNode('api_key')->isRequired()->cannotBeEmpty()->end()
