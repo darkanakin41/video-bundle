@@ -9,7 +9,7 @@ namespace Darkanakin41\VideoBundle\Command\Video;
 use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Nomenclature\PlatformNomenclature;
 use Darkanakin41\VideoBundle\Service\VideoService;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;

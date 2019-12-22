@@ -8,7 +8,7 @@ namespace Darkanakin41\VideoBundle\Command\Channel;
 
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Service\ChannelService;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;

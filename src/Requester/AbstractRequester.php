@@ -10,8 +10,7 @@ use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Service\ChannelService;
 use Exception;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -26,7 +25,7 @@ abstract class AbstractRequester
      */
     protected $eventDispatcher;
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     protected $registry;
     /**

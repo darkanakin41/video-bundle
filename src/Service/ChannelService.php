@@ -12,7 +12,7 @@ use Darkanakin41\VideoBundle\Helper\ChannelHelper;
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Requester\AbstractRequester;
 use Exception;
-use Symfony\Bridge\Doctrine\ManagerRegistry;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ChannelService
