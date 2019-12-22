@@ -30,8 +30,8 @@ class Configuration implements ConfigurationInterface
             ->arrayNode('platform')
                 ->arrayPrototype()
                     ->children()
-                        ->integerNode('api_key')->isRequired()->cannotBeEmpty()->end()
-                        ->integerNode('api_secret')->end()
+                        ->scalarNode('api_key')->isRequired()->cannotBeEmpty()->end()
+                        ->scalarNode('api_secret')->end()
                     ->end()
                 ->end()
             ->end();
