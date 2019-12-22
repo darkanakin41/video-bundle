@@ -17,6 +17,9 @@ abstract class Video
 {
     /**
      * @var int
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
@@ -85,6 +88,16 @@ abstract class Video
     }
 
     /**
+     * Get title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
      * Set title.
      *
      * @param string $title
@@ -99,13 +112,13 @@ abstract class Video
     }
 
     /**
-     * Get title.
+     * Get identifier.
      *
      * @return string
      */
-    public function getTitle()
+    public function getIdentifier()
     {
-        return $this->title;
+        return $this->identifier;
     }
 
     /**
@@ -123,13 +136,13 @@ abstract class Video
     }
 
     /**
-     * Get identifier.
+     * Get preview.
      *
      * @return string
      */
-    public function getIdentifier()
+    public function getPreview()
     {
-        return $this->identifier;
+        return $this->preview;
     }
 
     /**
@@ -147,13 +160,13 @@ abstract class Video
     }
 
     /**
-     * Get preview.
+     * Get platform.
      *
      * @return string
      */
-    public function getPreview()
+    public function getPlatform()
     {
-        return $this->preview;
+        return $this->platform;
     }
 
     /**
@@ -171,13 +184,13 @@ abstract class Video
     }
 
     /**
-     * Get platform.
+     * Get enabled.
      *
-     * @return string
+     * @return bool
      */
-    public function getPlatform()
+    public function isEnabled()
     {
-        return $this->platform;
+        return $this->enabled;
     }
 
     /**
@@ -195,13 +208,13 @@ abstract class Video
     }
 
     /**
-     * Get enabled.
+     * Get published.
      *
-     * @return bool
+     * @return \DateTime
      */
-    public function isEnabled()
+    public function getPublished()
     {
-        return $this->enabled;
+        return $this->published;
     }
 
     /**
@@ -219,13 +232,13 @@ abstract class Video
     }
 
     /**
-     * Get published.
+     * Get checked.
      *
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getPublished()
+    public function getChecked()
     {
-        return $this->published;
+        return $this->checked;
     }
 
     /**
@@ -243,13 +256,13 @@ abstract class Video
     }
 
     /**
-     * Get checked.
+     * Get channel.
      *
-     * @return \DateTime|null
+     * @return \Darkanakin41\VideoBundle\Model\Channel|null
      */
-    public function getChecked()
+    public function getChannel()
     {
-        return $this->checked;
+        return $this->channel;
     }
 
     /**
@@ -262,15 +275,5 @@ abstract class Video
         $this->channel = $channel;
 
         return $this;
-    }
-
-    /**
-     * Get channel.
-     *
-     * @return \Darkanakin41\VideoBundle\Model\Channel|null
-     */
-    public function getChannel()
-    {
-        return $this->channel;
     }
 }
