@@ -6,7 +6,6 @@
 
 namespace Darkanakin41\VideoBundle\DependencyInjection;
 
-use Darkanakin41\StreamBundle\DependencyInjection\Configuration;
 use Symfony\Component\Config\Definition\Exception\InvalidConfigurationException;
 use Symfony\Component\Config\Definition\Processor;
 use Symfony\Component\Config\FileLocator;
