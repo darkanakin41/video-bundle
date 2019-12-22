@@ -123,10 +123,8 @@ class YoutubeEndpoint extends AbstractEndpoint
 
     protected function initialize()
     {
-        $clientId = $this->getParameterBag()->get('darkanakin41.video.google.clientId');
-        $clientSecret = $this->getParameterBag()->get('darkanakin41.video.twitch.clientSecret');
+        $developperKey = $this->getParameterBag()->get('darkanakin41.video.google.developperKey');
         $this->client = new Google_Client();
-        $this->client->setClientId($clientId);
-        $this->client->setClientSecret($clientSecret);
+        $this->client->setDeveloperKey($developperKey);
     }
 }
