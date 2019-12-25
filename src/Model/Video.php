@@ -43,7 +43,7 @@ abstract class Video
 
     /**
      * @var string
-     * @ORM\Column(name="paltform", type="string")
+     * @ORM\Column(name="platform", type="string")
      */
     private $platform;
 
@@ -64,13 +64,6 @@ abstract class Video
      * @ORM\Column(name="checked", type="datetime", nullable=true)
      */
     private $checked;
-
-    /**
-     * @var Channel
-     * @ORM\ManyToOne(targetEntity="Darkanakin41\VideoBundle\Model\Channel")
-     * @ORM\JoinColumn(name="channel_id", referencedColumnName="id", nullable=true)
-     */
-    private $channel;
 
     public function __construct()
     {
@@ -260,20 +253,12 @@ abstract class Video
      *
      * @return \Darkanakin41\VideoBundle\Model\Channel|null
      */
-    public function getChannel()
-    {
-        return $this->channel;
-    }
+    abstract public function getChannel();
 
     /**
      * Set channel.
      *
      * @return Video
      */
-    public function setChannel(\Darkanakin41\VideoBundle\Model\Channel $channel = null)
-    {
-        $this->channel = $channel;
-
-        return $this;
-    }
+    abstract public function setChannel($channel = null);
 }

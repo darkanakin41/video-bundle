@@ -2,6 +2,8 @@ name: Quality
 
 on: [push]
 
+env:
+
 jobs:
   build:
 

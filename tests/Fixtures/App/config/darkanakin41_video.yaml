@@ -1,0 +1,7 @@
+darkanakin41_video:
+    video_class: "AppTestBundle\\Entity\\Video"
+    channel_class: "AppTestBundle\\Entity\\Channel"
+    platform:
+        google:
+            application_key: 'AIzaSyAuUhDWLgJxXSdALw_VcKkuyZ64gQ0F3hM'
+            referer: 'test.test'
