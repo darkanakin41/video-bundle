@@ -25,4 +25,6 @@ jobs:
         run: make cs_dry_run
 
       - name: Run Tests
+        env:
+            GOOGLE_APPLICATION_KEY: ${{ secrets.GoogleApplicationKey }}
         run: make test

@@ -14,9 +14,9 @@ use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Nomenclature\PlatformNomenclature;
 use Darkanakin41\VideoBundle\Service\ChannelService;
 use DateTime;
+use Doctrine\Common\Persistence\ManagerRegistry;
 use Exception;
 use Google_Service_YouTube_SearchResult;
-use Doctrine\Common\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 

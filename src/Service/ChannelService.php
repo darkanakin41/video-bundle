@@ -11,8 +11,8 @@ use Darkanakin41\VideoBundle\Exception\ChannelNotFoundException;
 use Darkanakin41\VideoBundle\Helper\ChannelHelper;
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Requester\AbstractRequester;
-use Exception;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ChannelService

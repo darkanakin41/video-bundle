@@ -9,8 +9,8 @@ namespace Darkanakin41\VideoBundle\Requester;
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Service\ChannelService;
-use Exception;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Exception;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
