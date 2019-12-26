@@ -3,5 +3,5 @@ darkanakin41_video:
     channel_class: "AppTestBundle\\Entity\\Channel"
     platform:
         google:
-            application_key: 'AIzaSyAuUhDWLgJxXSdALw_VcKkuyZ64gQ0F3hM'
+            application_key: '%env(GOOGLE_APPLICATION_KEY)%'
             referer: 'test.test'
