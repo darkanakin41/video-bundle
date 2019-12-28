@@ -1,6 +1,9 @@
 <?php
 
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /*
  * This file is part of the Darkanakin41VideoBundle package.
@@ -38,3 +41,21 @@ if (is_dir($buildDir = __DIR__.'/../build')) {
 }
 
 include __DIR__.'/Fixtures/App/AppKernel.php';
+
+$application = new Application(new AppKernel('test', true));
+$application->setAutoExit(false);
+
+$input = new ArrayInput(['command' => 'doctrine:database:create']);
+$application->run($input, new ConsoleOutput());
+
+// Create database schema
+$input = new ArrayInput(['command' => 'doctrine:schema:create']);
+$application->run($input, new ConsoleOutput());
+
+// Load fixtures of the AppTestBundle
+$input = new ArrayInput(['command' => 'doctrine:fixtures:load', '--no-interaction' => true, '--append' => false]);
+$application->run($input, new ConsoleOutput());
+
+// Make a copy of the original SQLite database to use the same unmodified database in every test
+copy($buildDir.'/test.db', $buildDir.'/original_test.db');
+unset($input, $application);

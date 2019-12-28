@@ -4,9 +4,9 @@
 namespace Darkanakin41\VideoBundle\Tests\Model;
 
 
+use AppTestBundle\Entity\Channel;
+use AppTestBundle\Entity\Video;
 use Darkanakin41\CoreBundle\Tests\Model\AbstractEntityTestCase;
-use Darkanakin41\VideoBundle\Model\Channel;
-use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Nomenclature\PlatformNomenclature;
 use DateTime;
 
@@ -17,7 +17,7 @@ class VideoTest extends AbstractEntityTestCase
      */
     protected function getEntity()
     {
-        return $this->getMockForAbstractClass(Video::class);
+        return new Video();
     }
 
     /**

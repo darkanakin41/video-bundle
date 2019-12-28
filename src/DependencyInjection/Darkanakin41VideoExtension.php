@@ -15,6 +15,8 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Darkanakin41VideoExtension extends Extension
 {
+    const CONFIG_KEY = 'darkanakin41.video.config';
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
@@ -31,6 +33,6 @@ class Darkanakin41VideoExtension extends Extension
             throw new InvalidConfigurationException('Please provide a valid channel_class value in configuration');
         }
 
-        $container->setParameter('darkanakin41.video.config', $config);
+        $container->setParameter(self::CONFIG_KEY, $config);
     }
 }

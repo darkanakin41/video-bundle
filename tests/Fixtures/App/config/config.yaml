@@ -2,12 +2,12 @@
 # Can be easily overridden in each test config
 imports:
     - { resource: services.yaml }
+    - { resource: darkanakin41_video.yaml }
 
 framework:
     secret: secret
     test: ~
     router: { resource: '%kernel.project_dir%/config/routing.yaml' }
-    form: true
     validation: { enable_annotations: true }
     profiler:
         collect: true
@@ -17,11 +17,11 @@ framework:
 doctrine:
     dbal:
         driver: pdo_sqlite
-        path:   '%kernel.project_dir%/../../../build/test.db'
+        path: '%kernel.project_dir%/../../../build/test.db'
     orm:
         auto_generate_proxy_classes: true
         auto_mapping: true
-#        mappings:
+        mappings:
             # UnitTestEntities:
             #     mapping: true
             #     type: annotation
@@ -29,13 +29,10 @@ doctrine:
             #     alias: 'UnitTests'
             #     prefix: 'AppTestBundle\Entity\UnitTests'
             #     is_bundle: false
-#            FunctionalTestEntities:
-#                mapping: true
-#                type: annotation
-#                dir: '%kernel.project_dir%/../AppTestBundle/Entity/FunctionalTests/'
-#                alias: 'FunctionalTests'
-#                prefix: 'AppTestBundle\Entity\FunctionalTests'
-#                is_bundle: false
-twig:
-    strict_variables: '%kernel.debug%'
-    default_path: '%kernel.project_dir%/templates'
+            FunctionalTestEntities:
+               mapping: true
+               type: annotation
+               dir: '%kernel.project_dir%/../AppTestBundle/Entity/'
+               alias: 'FunctionalTests'
+               prefix: 'AppTestBundle\Entity'
+               is_bundle: false

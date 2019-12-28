@@ -11,7 +11,7 @@ use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Service\ChannelService;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Exception;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractRequester
@@ -37,15 +37,31 @@ abstract class AbstractRequester
      */
     private $channelClass;
 
-    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher, ChannelService $channelService, ContainerBuilder $containerBuilder)
+    public function __construct(ManagerRegistry $registry, EventDispatcherInterface $eventDispatcher, ChannelService $channelService, ParameterBagInterface $parameterBag)
     {
         $this->registry = $registry;
         $this->eventDispatcher = $eventDispatcher;
         $this->channelService = $channelService;
 
-        $configuration = $containerBuilder->get('darkanakin41.video.config');
+        $configuration = $parameterBag->get('darkanakin41.video.config');
         $this->videoClass = $configuration['video_class'];
         $this->channelClass = $configuration['channel_class'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getVideoClass()
+    {
+        return $this->videoClass;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChannelClass()
+    {
+        return $this->channelClass;
     }
 
     /**
@@ -53,7 +69,7 @@ abstract class AbstractRequester
      */
     public function createVideoObject()
     {
-        $class = $this->videoClass;
+        $class = $this->getVideoClass();
 
         return new $class();
     }
@@ -63,7 +79,7 @@ abstract class AbstractRequester
      */
     public function createChannelObject()
     {
-        $class = $this->channelClass;
+        $class = $this->getChannelClass();
 
         return new $class();
     }

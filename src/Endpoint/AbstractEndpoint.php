@@ -6,24 +6,29 @@
 
 namespace Darkanakin41\VideoBundle\Endpoint;
 
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Darkanakin41\VideoBundle\DependencyInjection\Darkanakin41VideoExtension;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 abstract class AbstractEndpoint
 {
     /**
-     * @var ParameterBag
+     * @var array
      */
-    private $parameterBag;
+    private $config;
 
-    public function __construct(ParameterBag $parameterBag)
+    public function __construct(ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
+        $this->config = $parameterBag->get(Darkanakin41VideoExtension::CONFIG_KEY);
+        $this->initialize();
     }
 
     abstract protected function initialize();
 
-    protected function getParameterBag(): ParameterBag
+    /**
+     * @return array
+     */
+    public function getConfig(): array
     {
-        return $this->parameterBag;
+        return $this->config;
     }
 }

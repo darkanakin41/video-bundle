@@ -14,8 +14,8 @@ class AppKernel extends Kernel
     {
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Darkanakin41\VideoBundle\Darkanakin41VideoBundle(),
             new Darkanakin41\VideoBundle\Tests\Fixtures\AppTestBundle\AppTestBundle()
         ];
@@ -24,20 +24,6 @@ class AppKernel extends Kernel
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
         $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yaml');
-
-        $loader->load(function (ContainerBuilder $container) {
-            $container->loadFromExtension('framework', [
-                'assets' => null,
-            ]);
-        });
-
-        if (trait_exists(MailerAssertionsTrait::class)) {
-            $loader->load(function (ContainerBuilder $container) {
-                $container->loadFromExtension('twig', [
-                    'exception_controller' => null,
-                ]);
-            });
-        }
     }
 
     public function getProjectDir(): string

@@ -9,7 +9,7 @@
     </php>
 
     <testsuites>
-        <testsuite name="Darkanakin41TableBundle test suite">
+        <testsuite name="Darkanakin41VideoBundle test suite">
             <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
@@ -18,6 +18,9 @@
         <whitelist>
             <directory>./src</directory>
             <exclude>
+                <file>./src/Darkanakin41VideoBundle.php</file>
+                <directory>./src/DependencyInjection</directory>
+                <directory>./src/Exception</directory>
                 <directory>./src/Resources</directory>
             </exclude>
         </whitelist>

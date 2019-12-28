@@ -3,3 +3,31 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+
+
+    Darkanakin41\VideoBundle\:
+        autowire: true
+        public: true
+        resource: '../../{Command, Endpoint, Helper, Requester, Service}'
+
+    Darkanakin41\VideoBundle\Command\:
+        autowire: true
+        public: true
+        resource: '../../Command'
+        tags:
+            - { name: console.command }
+
+    Darkanakin41\VideoBundle\Endpoint\:
+        autowire: true
+        public: true
+        resource: '../../Endpoint'
+
+    Darkanakin41\VideoBundle\Requester\:
+        autowire: true
+        public: true
+        resource: '../../Requester'
+
+    Darkanakin41\VideoBundle\Service\:
+        autowire: true
+        public: true
+        resource: '../../Service'
