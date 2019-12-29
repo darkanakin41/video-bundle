@@ -32,6 +32,27 @@ class UpdateCommandTest extends AbstractTestCase
     }
 
     /**
+     * @throws ChannelDoublonException
+     * @throws ChannelNotFoundException
+     * @throws UnknownPlatformException
+     * @group debug
+     */
+    public function testExecuteOnlyActive()
+    {
+        $channel = $this->createChannel();
+
+        $application = new Application(static::$kernel);
+        $application->setAutoExit(false);
+
+        $command = $application->find(UpdateCommand::$defaultName);
+        $commandTester = new CommandTester($command);
+        $commandTester->execute(['--only-active' => false]);
+
+        $videos = $this->getDoctrine()->getRepository(Video::class)->findBy(['channel' => $channel]);
+        $this->assertNotEmpty($videos);
+    }
+
+    /**
      * @return Channel
      * @throws ChannelDoublonException
      * @throws ChannelNotFoundException

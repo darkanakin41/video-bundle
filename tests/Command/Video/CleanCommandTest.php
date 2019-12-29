@@ -20,9 +20,6 @@ use Symfony\Component\Console\Tester\CommandTester;
 class CleanCommandTest extends AbstractTestCase
 {
 
-    /**
-     * @group debug
-     */
     public function testExecute()
     {
         $videos = $this->createVideos();
