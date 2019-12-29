@@ -6,12 +6,13 @@
 
 namespace Darkanakin41\VideoBundle\Service;
 
+use Darkanakin41\VideoBundle\Exception\UnknownPlatformException;
 use Darkanakin41\VideoBundle\Exception\VideoDoublonException;
 use Darkanakin41\VideoBundle\Exception\VideoNotFoundException;
 use Darkanakin41\VideoBundle\Helper\VideoHelper;
 use Darkanakin41\VideoBundle\Model\Video;
+use Darkanakin41\VideoBundle\Nomenclature\PlatformNomenclature;
 use Darkanakin41\VideoBundle\Requester\AbstractRequester;
-use Exception;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class VideoService
@@ -35,7 +36,7 @@ class VideoService
      *
      * @throws VideoNotFoundException
      * @throws VideoDoublonException
-     * @throws Exception
+     * @throws UnknownPlatformException
      */
     public function create(Video $video, $url)
     {
@@ -46,8 +47,12 @@ class VideoService
         $data = VideoHelper::getIdentifier($url);
         $platform = VideoHelper::getPlatform($url);
 
-        $video->setPlatform($platform);
-        $video->setIdentifier($data);
+        if (null !== $data) {
+            $video->setIdentifier($data);
+        }
+        if (PlatformNomenclature::OTHER !== $platform) {
+            $video->setPlatform($platform);
+        }
         if (null === $video->getPublished()) {
             $video->setPublished(new \DateTime());
         }
@@ -59,8 +64,10 @@ class VideoService
             throw new VideoNotFoundException();
         }
 
+        $requester = $this->getRequester($video->getPlatform());
+
         /** @var Video $exist */
-        $exist = $this->container->get('doctrine')->getRepository(Video::class)->findOneBy(array(
+        $exist = $this->container->get('doctrine')->getRepository($requester->getVideoClass())->findOneBy(array(
             'identifier' => $video->getIdentifier(),
             'platform' => $video->getPlatform(),
         ));
@@ -70,9 +77,6 @@ class VideoService
             $exception->setVideo($exist);
             throw $exception;
         }
-
-        $this->container->get('doctrine')->getManager()->persist($video);
-        $this->container->get('doctrine')->getManager()->flush();
 
         $this->refresh($video->getPlatform(), array($video));
 
@@ -85,7 +89,7 @@ class VideoService
      * @param string  $platform
      * @param Video[] $videos
      *
-     * @throws \Exception
+     * @throws UnknownPlatformException
      */
     public function refresh($platform, array $videos)
     {
@@ -101,20 +105,17 @@ class VideoService
      *
      * @return AbstractRequester
      *
-     * @throws \Exception
+     * @throws UnknownPlatformException
      */
     private function getRequester($platform)
     {
         $classname = sprintf('Darkanakin41\\VideoBundle\\Requester\\%sRequester', ucfirst(strtolower($platform)));
         if (!class_exists($classname)) {
-            throw new \Exception('unhandled_platform');
+            throw new UnknownPlatformException();
         }
-        $object = new $classname(
-            $this->container->get('doctrine'),
-            $this->container->get('darkanakin41.api'),
-            $this->container->get('event_dispatcher'),
-            $this->container->get(ChannelService::class)
-        );
+
+        /** @var AbstractRequester $object */
+        $object = $this->container->get($classname);
 
         return $object;
     }

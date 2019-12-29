@@ -9,3 +9,6 @@ cs_dry_run:
 
 test:
 	./vendor/bin/phpunit --coverage-text --coverage-html ./coverage
+
+test_debug:
+	./vendor/bin/phpunit --coverage-text --coverage-html ./coverage --group=debug

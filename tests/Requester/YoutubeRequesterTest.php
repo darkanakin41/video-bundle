@@ -9,15 +9,6 @@ use Darkanakin41\VideoBundle\Requester\YoutubeRequester;
 
 class YoutubeRequesterTest extends AbstractRequesterTest
 {
-
-    public function getDoctrine(){
-        if (self::$container === null) {
-            static::createClient();
-        }
-
-        $container = self::$container;
-        return $container->get("doctrine");
-    }
     public function testUpdateChannel()
     {
         $channel = $this->getRequester()->createChannelObject();
@@ -34,13 +25,8 @@ class YoutubeRequesterTest extends AbstractRequesterTest
      */
     protected function getRequester()
     {
-        if (self::$container === null) {
-            static::createClient();
-        }
-
-        $container = self::$container;
         /** @var YoutubeRequester $service */
-        $service = $container->get(YoutubeRequester::class);
+        $service = self::$container->get(YoutubeRequester::class);
         return $service;
     }
 
@@ -152,6 +138,9 @@ class YoutubeRequesterTest extends AbstractRequesterTest
         $this->assertEmpty($videos["toUpdate"]);
     }
 
+    /**
+     * @throws \Exception
+     */
     public function testUpdateVideosNewVideo()
     {
         $video = new Video();
@@ -161,7 +150,47 @@ class YoutubeRequesterTest extends AbstractRequesterTest
         $videos = $this->getRequester()->updateVideos([$video]);
 
         $this->assertEmpty($videos["toRemove"]);
-        $this->assertEmpty($videos["toUpdate"]);
+        $this->assertNotEmpty($videos["toUpdate"]);
+
+        /** @var Video $video */
+        $video = $videos["toUpdate"][array_key_first($videos["toUpdate"])];
+
+        $this->assertNotNull($video->getChannel());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testUpdateVideosNewVideoChannelDoublon()
+    {
+        $video = new Video();
+        $video->setIdentifier('YehUl_xjtqk');
+        $video->setPlatform(PlatformNomenclature::YOUTUBE);
+
+        $videos = $this->getRequester()->updateVideos([$video]);
+
+        $this->assertEmpty($videos["toRemove"]);
+        $this->assertNotEmpty($videos["toUpdate"]);
+
+        /** @var Video $video */
+        $video = $videos["toUpdate"][array_key_first($videos["toUpdate"])];
+        foreach($videos['toUpdate'] as $video){
+            $this->getDoctrine()->getManager()->persist($video->getChannel());
+            $this->getDoctrine()->getManager()->persist($video);
+        }
+        foreach($videos['toRemove'] as $video){
+            $this->getDoctrine()->getManager()->remove($video);
+        }
+        $this->getDoctrine()->getManager()->flush();
+
+        $video = new Video();
+        $video->setIdentifier('hAbFHa55yqo');
+        $video->setPlatform(PlatformNomenclature::YOUTUBE);
+
+        $videos = $this->getRequester()->updateVideos([$video]);
+
+        $this->assertEmpty($videos["toRemove"]);
+        $this->assertNotEmpty($videos["toUpdate"]);
 
         /** @var Video $video */
         $video = $videos["toUpdate"][array_key_first($videos["toUpdate"])];
@@ -185,10 +214,5 @@ class YoutubeRequesterTest extends AbstractRequesterTest
         $this->getRequester()->retrieveIdentifier($channel);
 
         $this->assertEquals("UCHFq2w-LbRfiemewtlJkoIA", $channel->getIdentifier());
-    }
-
-    protected function setUp(): void
-    {
-        $this->initDatabase();
     }
 }

@@ -4,9 +4,9 @@
 namespace Darkanakin41\VideoBundle\Tests\Endpoint;
 
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Darkanakin41\VideoBundle\Tests\AbstractTestCase;
 
-abstract class AbstractEndpointTest extends WebTestCase
+abstract class AbstractEndpointTest extends AbstractTestCase
 {
     abstract protected function getEndpoint();
 }

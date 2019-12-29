@@ -6,6 +6,7 @@
 
 namespace Darkanakin41\VideoBundle\Command\Channel;
 
+use Darkanakin41\VideoBundle\DependencyInjection\Darkanakin41VideoExtension;
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Service\ChannelService;
 use Doctrine\Common\Persistence\ManagerRegistry;
@@ -14,10 +15,11 @@ use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UpdateCommand extends Command
 {
-    protected static $defaultName = 'darkanakin41:channel:update';
+    public static $defaultName = 'darkanakin41:channel:update';
     /**
      * @var ManagerRegistry
      */
@@ -27,12 +29,26 @@ class UpdateCommand extends Command
      */
     private $channelService;
 
-    public function __construct(ManagerRegistry $managerRegistry, ChannelService $channelService, $name = null)
+    /** @var string */
+    private $channelClass;
+
+    public function __construct(ManagerRegistry $managerRegistry, ChannelService $channelService, ParameterBagInterface $parameterBag, $name = null)
     {
         parent::__construct($name);
 
         $this->managerRegistry = $managerRegistry;
         $this->channelService = $channelService;
+
+        $configuration = $parameterBag->get(Darkanakin41VideoExtension::CONFIG_KEY);
+        $this->channelClass = $configuration['channel_class'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getChannelClass()
+    {
+        return $this->channelClass;
     }
 
     protected function configure()
@@ -54,7 +70,7 @@ class UpdateCommand extends Command
         $created = 0;
 
         /** @var Channel[] $channels */
-        $repository = $this->managerRegistry->getRepository(Channel::class);
+        $repository = $this->managerRegistry->getRepository($this->getChannelClass());
         if ($onlyactive) {
             $channels = $repository->findBy(array('enabled' => true), array('updated' => 'ASC'));
         } else {
@@ -70,8 +86,15 @@ class UpdateCommand extends Command
 
         foreach ($channels as $channel) {
             $this->channelService->refresh($channel);
-            $created += $this->channelService->retrieveVideos($channel);
-            $progressBar->setMessage(sprintf($messageTemplate, $created));
+            $videos = $this->channelService->retrieveVideos($channel);
+
+            $this->managerRegistry->getManager()->persist($channel);
+            foreach ($videos as $video) {
+                $this->managerRegistry->getManager()->persist($video);
+            }
+            $this->managerRegistry->getManager()->flush();
+
+            $progressBar->setMessage(sprintf($messageTemplate, count($videos)));
             $progressBar->advance();
         }
 

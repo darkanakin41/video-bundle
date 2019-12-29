@@ -27,7 +27,7 @@ class VideoHelper
             return $step3_explode[0];
         }
 
-        return $url;
+        return null;
     }
 
     /**

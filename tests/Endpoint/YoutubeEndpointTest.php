@@ -14,13 +14,8 @@ class YoutubeEndpointTest extends AbstractEndpointTest
      */
     protected function getEndpoint()
     {
-        if (self::$container === null) {
-            static::createClient();
-        }
-
-        $container = self::$container;
         /** @var YoutubeEndpoint $service */
-        $service = $container->get(YoutubeEndpoint::class);
+        $service = self::$container->get(YoutubeEndpoint::class);
         return $service;
     }
 

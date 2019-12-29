@@ -22,13 +22,10 @@ abstract class AbstractEndpoint
         $this->initialize();
     }
 
-    abstract protected function initialize();
-
-    /**
-     * @return array
-     */
     public function getConfig(): array
     {
         return $this->config;
     }
+
+    abstract protected function initialize();
 }

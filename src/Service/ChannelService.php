@@ -8,11 +8,14 @@ namespace Darkanakin41\VideoBundle\Service;
 
 use Darkanakin41\VideoBundle\Exception\ChannelDoublonException;
 use Darkanakin41\VideoBundle\Exception\ChannelNotFoundException;
+use Darkanakin41\VideoBundle\Exception\UnknownPlatformException;
 use Darkanakin41\VideoBundle\Helper\ChannelHelper;
 use Darkanakin41\VideoBundle\Model\Channel;
+use Darkanakin41\VideoBundle\Nomenclature\PlatformNomenclature;
 use Darkanakin41\VideoBundle\Requester\AbstractRequester;
 use Doctrine\Common\Persistence\ManagerRegistry;
 use Exception;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ChannelService
@@ -27,16 +30,22 @@ class ChannelService
      */
     private $eventDispatcher;
 
-    public function __construct(ManagerRegistry $managerRegistry, EventDispatcherInterface $eventDispatcher)
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ManagerRegistry $managerRegistry, EventDispatcherInterface $eventDispatcher, ContainerInterface $container)
     {
         $this->managerRegistry = $managerRegistry;
         $this->eventDispatcher = $eventDispatcher;
+        $this->container = $container;
     }
 
     /**
      * Retrieve new videos from the given channel.
      *
-     * @return int the number of videos created
+     * @return array videos to persist
      *
      * @throws Exception
      */
@@ -56,7 +65,7 @@ class ChannelService
      *
      * @throws ChannelNotFoundException
      * @throws ChannelDoublonException
-     * @throws Exception
+     * @throws UnknownPlatformException
      */
     public function create(Channel $channel, $url)
     {
@@ -67,7 +76,7 @@ class ChannelService
         $data = ChannelHelper::getIdentifier($url);
         $platform = ChannelHelper::getPlatform($url);
 
-        if ('OTHER' !== $platform) {
+        if (PlatformNomenclature::OTHER !== $platform) {
             $channel->setPlatform($platform);
         }
         if (!empty($data)) {
@@ -86,8 +95,10 @@ class ChannelService
             throw new ChannelNotFoundException();
         }
 
+        $requester = $this->getRequester($channel->getPlatform());
+
         /** @var Channel $exist */
-        $exist = $this->managerRegistry->getRepository(Channel::class)->findOneBy(array(
+        $exist = $this->managerRegistry->getRepository($requester->getChannelClass())->findOneBy(array(
             'identifier' => $channel->getIdentifier(),
             'platform' => $channel->getPlatform(),
         ));
@@ -98,9 +109,6 @@ class ChannelService
             throw $exception;
         }
 
-        $this->managerRegistry->getManager()->persist($channel);
-        $this->managerRegistry->getManager()->flush();
-
         $this->refresh($channel);
 
         return true;
@@ -109,7 +117,7 @@ class ChannelService
     /**
      * Retrieve channel's identifier based on his information.
      *
-     * @throws Exception
+     * @throws UnknownPlatformException
      */
     public function retrieveIdentifier(Channel $channel)
     {
@@ -120,7 +128,7 @@ class ChannelService
     /**
      * Refresh data from the given channel.
      *
-     * @throws Exception
+     * @throws UnknownPlatformException
      */
     public function refresh(Channel $channel)
     {
@@ -135,15 +143,18 @@ class ChannelService
      *
      * @return AbstractRequester
      *
-     * @throws Exception
+     * @throws UnknownPlatformException
      */
     private function getRequester($platform)
     {
         $classname = sprintf('Darkanakin41\\VideoBundle\\Requester\\%sRequester', ucfirst(strtolower($platform)));
         if (!class_exists($classname)) {
-            throw new Exception('unhandled_platform');
+            throw new UnknownPlatformException();
         }
 
-        return new $classname($this->managerRegistry, $this->eventDispatcher);
+        /** @var AbstractRequester $requester */
+        $requester = $this->container->get($classname);
+
+        return $requester;
     }
 }

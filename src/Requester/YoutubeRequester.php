@@ -74,10 +74,9 @@ class YoutubeRequester extends AbstractRequester
      */
     public function retrieveChannelVideos(Channel $channel)
     {
+        $videos = array();
 
-        $videos = [];
-
-        if ($channel->getPlatform() !== PlatformNomenclature::YOUTUBE) {
+        if (PlatformNomenclature::YOUTUBE !== $channel->getPlatform()) {
             return $videos;
         }
 
@@ -97,7 +96,7 @@ class YoutubeRequester extends AbstractRequester
 
             $this->updateVideoData($video, $item);
 
-            $videos[$video->getPlatform()."-".$video->getIdentifier()] = $video;
+            $videos[$video->getPlatform().'-'.$video->getIdentifier()] = $video;
 
             if ('live' === $item->getSnippet()->liveBroadcastContent) {
                 $this->triggerIsLiveEvent($video); // @codeCoverageIgnore
@@ -105,45 +104,6 @@ class YoutubeRequester extends AbstractRequester
         }
 
         return $videos;
-    }
-
-    /**
-     * @param Google_Service_YouTube_SearchResult|\Google_Service_YouTube_Video $data
-     *
-     * @throws Exception
-     */
-    private function updateVideoData(Video &$video, $data)
-    {
-        $video->setTitle($data->getSnippet()->getTitle());
-        $video->setChecked(new DateTime());
-        $video->setPublished(new DateTime($data->getSnippet()->getPublishedAt()));
-
-        $video->setPreview($data->getSnippet()->getThumbnails()->getDefault()->getUrl());
-
-        if ($data->getSnippet()->getThumbnails()->getMedium() !== null) {
-            $video->setPreview($data->getSnippet()->getThumbnails()->getMedium()->getUrl());
-        }
-
-        if ($data->getSnippet()->getThumbnails()->getHigh() !== null) {
-            $video->setPreview($data->getSnippet()->getThumbnails()->getHigh()->getUrl());
-        }
-
-        if (null === $video->getChannel()) {
-            $channel = null;
-            try {
-                $channel = $this->createChannelObject();
-                $channel->setPlatform(PlatformNomenclature::YOUTUBE);
-                $channel->setIdentifier($data->getSnippet()->getChannelId());
-                $channel->setEnabled(false);
-
-                $this->channelService->create($channel, $channel->getIdentifier());
-            } catch (ChannelDoublonException $e) {
-                $channel = $e->getChannel();
-            } catch (ChannelNotFoundException $e) {
-            }
-
-            $video->setChannel($channel);
-        }
     }
 
     /**
@@ -155,18 +115,18 @@ class YoutubeRequester extends AbstractRequester
      */
     public function updateVideos(array $videos)
     {
-        $toRemove = [];
-        $toUpdate = [];
+        $toRemove = array();
+        $toUpdate = array();
 
-        $ids = [];
+        $ids = array();
         foreach ($videos as $video) {
             $ids[] = $video->getIdentifier();
         }
 
         $data = $this->youtubeEndpoint->getVideosData($ids);
 
-        if (count($data->getItems()) === 0) {
-            return ["toUpdate" => $toUpdate, "toRemove" => $toRemove];
+        if (0 === count($data->getItems())) {
+            return array('toUpdate' => $toUpdate, 'toRemove' => $toRemove);
         }
 
         foreach ($videos as $video) {
@@ -187,7 +147,7 @@ class YoutubeRequester extends AbstractRequester
             $toUpdate[] = $video;
         }
 
-        return ["toUpdate" => $toUpdate, "toRemove" => $toRemove];
+        return array('toUpdate' => $toUpdate, 'toRemove' => $toRemove);
     }
 
     /**
@@ -203,6 +163,45 @@ class YoutubeRequester extends AbstractRequester
             /** @var \Google_Service_YouTube_Channel $channelData */
             $channelData = $data->getItems()[0];
             $channel->setIdentifier($channelData->getId());
+        }
+    }
+
+    /**
+     * @param Google_Service_YouTube_SearchResult|\Google_Service_YouTube_Video $data
+     *
+     * @throws Exception
+     */
+    private function updateVideoData(Video &$video, $data)
+    {
+        $video->setTitle($data->getSnippet()->getTitle());
+        $video->setChecked(new DateTime());
+        $video->setPublished(new DateTime($data->getSnippet()->getPublishedAt()));
+
+        $video->setPreview($data->getSnippet()->getThumbnails()->getDefault()->getUrl());
+
+        if (null !== $data->getSnippet()->getThumbnails()->getMedium()) {
+            $video->setPreview($data->getSnippet()->getThumbnails()->getMedium()->getUrl());
+        }
+
+        if (null !== $data->getSnippet()->getThumbnails()->getHigh()) {
+            $video->setPreview($data->getSnippet()->getThumbnails()->getHigh()->getUrl());
+        }
+
+        if (null === $video->getChannel()) {
+            $channel = null;
+            try {
+                $channel = $this->createChannelObject();
+                $channel->setPlatform(PlatformNomenclature::YOUTUBE);
+                $channel->setIdentifier($data->getSnippet()->getChannelId());
+                $channel->setEnabled(false);
+
+                $this->channelService->create($channel, $channel->getIdentifier());
+            } catch (ChannelDoublonException $e) {
+                $channel = $e->getChannel();
+            } catch (ChannelNotFoundException $e) {
+            }
+
+            $video->setChannel($channel);
         }
     }
 }

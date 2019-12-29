@@ -38,9 +38,9 @@ class VideoHelperTest extends TestCase
     public function getPlatformProvider()
     {
         return [
-            ['https://www.twitch.tv/zerator/videos', PlatformNomenclature::OTHER, 'https://www.twitch.tv/zerator/videos'],
+            ['https://www.twitch.tv/zerator/videos', PlatformNomenclature::OTHER, null],
             ['https://www.youtube.com/watch?v=-L2JlFGkFXw', PlatformNomenclature::YOUTUBE, '-L2JlFGkFXw'],
-            ['https://www.scoopturn.com/', PlatformNomenclature::OTHER, 'https://www.scoopturn.com/'],
+            ['https://www.scoopturn.com/', PlatformNomenclature::OTHER, null],
         ];
     }
 }

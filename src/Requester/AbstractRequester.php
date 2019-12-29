@@ -6,6 +6,7 @@
 
 namespace Darkanakin41\VideoBundle\Requester;
 
+use Darkanakin41\VideoBundle\DependencyInjection\Darkanakin41VideoExtension;
 use Darkanakin41\VideoBundle\Model\Channel;
 use Darkanakin41\VideoBundle\Model\Video;
 use Darkanakin41\VideoBundle\Service\ChannelService;
@@ -43,7 +44,7 @@ abstract class AbstractRequester
         $this->eventDispatcher = $eventDispatcher;
         $this->channelService = $channelService;
 
-        $configuration = $parameterBag->get('darkanakin41.video.config');
+        $configuration = $parameterBag->get(Darkanakin41VideoExtension::CONFIG_KEY);
         $this->videoClass = $configuration['video_class'];
         $this->channelClass = $configuration['channel_class'];
     }
@@ -92,7 +93,7 @@ abstract class AbstractRequester
     /**
      * Retrieve new videos from the given channel.
      *
-     * @return int the number of new videos
+     * @return array videos to persist
      */
     abstract public function retrieveChannelVideos(Channel $channel);
 
@@ -112,6 +113,8 @@ abstract class AbstractRequester
 
     /**
      * Trigger an IsLiveEvent.
+     *
+     * @codeCoverageIgnore
      */
     public function triggerIsLiveEvent(Video $video)
     {
