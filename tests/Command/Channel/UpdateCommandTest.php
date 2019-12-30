@@ -46,7 +46,7 @@ class UpdateCommandTest extends AbstractTestCase
 
         $command = $application->find(UpdateCommand::$defaultName);
         $commandTester = new CommandTester($command);
-        $commandTester->execute(['--only-active' => false]);
+        $commandTester->execute(['only-active' => false]);
 
         $videos = $this->getDoctrine()->getRepository(Video::class)->findBy(['channel' => $channel]);
         $this->assertNotEmpty($videos);
