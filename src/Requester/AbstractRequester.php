@@ -101,6 +101,8 @@ abstract class AbstractRequester
      * Refresh data from the given list of videos.
      *
      * @param Video[] $videos
+     *
+     * @return array [toUpdate, toRemove]
      */
     abstract public function updateVideos(array $videos);
 

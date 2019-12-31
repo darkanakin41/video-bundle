@@ -10,7 +10,7 @@ use Throwable;
 
 class UnknownPlatformException extends \Exception
 {
-    public function __construct($message = 'unknown_platofmr', $code = 0, Throwable $previous = null)
+    public function __construct($message = 'unknown_platform', $code = 0, Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

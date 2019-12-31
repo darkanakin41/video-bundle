@@ -15,7 +15,6 @@ class AppKernel extends Kernel
         return [
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Darkanakin41\VideoBundle\Darkanakin41VideoBundle(),
             new Darkanakin41\VideoBundle\Tests\Fixtures\AppTestBundle\AppTestBundle()
         ];

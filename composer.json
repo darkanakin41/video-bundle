@@ -33,9 +33,9 @@
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^2.14",
-        "doctrine/data-fixtures": "^1.4",
-        "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "friendsoftwig/twigcs": "^3.2",
         "phpunit/phpunit": "^8.4",
+        "sensiolabs/security-checker": "^6.0",
         "symfony/console": "^4.0",
         "symfony/test-pack": "*"
     },

@@ -35,7 +35,6 @@ class UpdateCommandTest extends AbstractTestCase
      * @throws ChannelDoublonException
      * @throws ChannelNotFoundException
      * @throws UnknownPlatformException
-     * @group debug
      */
     public function testExecuteOnlyActive()
     {

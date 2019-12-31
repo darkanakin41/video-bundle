@@ -6,9 +6,6 @@ services:
     logger:
         class: Psr\Log\NullLogger
 
-    Darkanakin41\VideoBundle\Tests\Fixtures\AppTestBundle\DataFixtures\AppFixtures:
-        tags: ['doctrine.fixture.orm']
-
     AppTestBundle\Repository\:
         autowire: true
         public: true
